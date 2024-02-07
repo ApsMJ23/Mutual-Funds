@@ -5,6 +5,9 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import {TouchableOpacity} from "react-native";
 import {AntDesign} from "@expo/vector-icons";
+import colors from "@/constants/Colors";
+import {onAuthStateChanged} from "@firebase/auth";
+import {auth} from "@/firebaseConfig";
 
 
 export {
@@ -45,9 +48,13 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const router = useRouter();
-  useEffect(() => {
-      router.push('/(modals)/loginPage')
-  },[])
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      router.push('/(tabs)');
+    } else {
+      router.push('/(modals)/loginPage');
+    }
+  });
 
   return (
       <Stack>
@@ -64,10 +71,15 @@ function RootLayoutNav() {
           ),
         }} />
           <Stack.Screen name="(modals)/loginPage" options={{
-                headerTitle:'Login Page',
-                presentation:'fullScreenModal',
-                headerTransparent: true,
-            }} />
+              headerTitle:'Login',
+              headerTitleAlign:'left',
+              headerTitleStyle: {
+                  fontSize:30,
+                  color:colors.textColorPrimary,
+              },
+              presentation:'fullScreenModal',
+              headerTransparent: true,
+          }} />
       </Stack>
   );
 }

@@ -1,4 +1,4 @@
-import {FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {FlatList, Pressable, SafeAreaView, StyleSheet, Text, View} from "react-native";
 import {CardContent} from "@/constants/CardContent";
 import {MaterialIcons} from "@expo/vector-icons";
 import {defaultStyles} from "@/constants/Styles";
@@ -16,13 +16,13 @@ const index = () => {
                 return(
                     <View style={styles.container}>
                         {/*@ts-ignore*/}
-                        <TouchableOpacity onPress={()=>router.push(cardItem.link)} style={styles.card}>
+                        <Pressable onPress={()=>router.push(cardItem.link)} style={styles.card}>
                             <View style={styles.cardBody}>
                                 {/*@ts-ignore*/}
                                 <MaterialIcons name={cardItem.icon} size={24} color="black" />
                                 <Text style={defaultStyles.textSecondary}>{cardItem.title}</Text>
                             </View>
-                        </TouchableOpacity>
+                        </Pressable>
                     </View>
                 )}
             }/>
