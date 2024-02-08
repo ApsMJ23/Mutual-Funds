@@ -4,8 +4,18 @@ import {MaterialIcons} from "@expo/vector-icons";
 import {defaultStyles} from "@/constants/Styles";
 import Colors from "@/constants/Colors";
 import {useRouter} from "expo-router";
+import {useEffect} from "react";
+import {auth} from "@/firebaseConfig";
 const index = () => {
     const router = useRouter();
+    useEffect(() => {
+        const usSubscribe = auth.onAuthStateChanged((user) => {
+            if (!user) {
+                router.push('/screens/loginPage');
+            }
+        });
+        return usSubscribe;
+    }, []);
     return(
         <SafeAreaView style={styles.wrapper}>
             <View style={styles.headerContainer}>

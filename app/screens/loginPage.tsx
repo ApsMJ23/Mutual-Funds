@@ -1,15 +1,14 @@
 import {SafeAreaView, StyleSheet, Text} from "react-native";
 import LoginForm from "@/app/Components/LoginForm/LoginForm";
 import colors from "@/constants/Colors";
-import {useState} from "react";
-import {signInWithEmailAndPassword,createUserWithEmailAndPassword} from "@firebase/auth";
+import {useEffect, useState} from "react";
+import {signInWithEmailAndPassword, createUserWithEmailAndPassword} from "@firebase/auth";
 import {auth} from "@/firebaseConfig";
 import Toast from "react-native-toast-message";
 import {useRouter} from "expo-router";
 import SignUpForm from "@/app/Components/SignUpForm/SignUpForm";
-import { GoogleAuthProvider } from "@firebase/auth";
 
-const loginPage=()=>{
+const loginPage = () => {
     const [showSignUp, setShowSignUp] = useState(false);
     const router = useRouter();
     const [userDetails, setUserDetails] = useState({
@@ -39,7 +38,6 @@ const loginPage=()=>{
             .then((userCredential) => {
                 // Signed in
                 const user = userCredential.user;
-                console.log(user)
                 setShowSignUp(false);
             })
             .catch((error) => {
@@ -53,11 +51,14 @@ const loginPage=()=>{
                 });
             });
     }
-    return(
-        <SafeAreaView style={styles.container} >
-            <Text style={styles.text}>{showSignUp?'Create a user account':'Welcome!! Login to continue.'}</Text>
-            {!showSignUp&& <LoginForm userDetails={userDetails} setUserDetails={setUserDetails} TriggerLogin={TriggerLogin} setShowSignUp={setShowSignUp}/>}
-            {showSignUp&&<SignUpForm userDetails={userDetails} setUserDetails={setUserDetails} triggerSignUp={triggerSignUp}/>}
+    return (
+        <SafeAreaView style={styles.container}>
+            <Text style={styles.text}>{showSignUp ? 'Create a user account' : 'Welcome!! Login to continue.'}</Text>
+            {!showSignUp &&
+                <LoginForm userDetails={userDetails} setUserDetails={setUserDetails} TriggerLogin={TriggerLogin}
+                           setShowSignUp={setShowSignUp}/>}
+            {showSignUp &&
+                <SignUpForm userDetails={userDetails} setUserDetails={setUserDetails} triggerSignUp={triggerSignUp}/>}
 
             <Toast/>
         </SafeAreaView>
@@ -67,13 +68,13 @@ const loginPage=()=>{
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor:colors.background,
+        backgroundColor: colors.background,
         flex: 1,
     },
     text: {
         paddingHorizontal: 20,
         marginTop: 20,
-        color:colors.textColorPrimary,
+        color: colors.textColorPrimary,
         fontSize: 20,
         fontWeight: "bold",
     },

@@ -48,16 +48,28 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const router = useRouter();
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      router.push('/(tabs)');
-    } else {
-      router.push('/(modals)/loginPage');
-    }
-  });
-
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+            if (user) {
+                router.push('/(tabs)/');
+            }else{
+                router.push('/screens/loginPage');
+            }
+        });
+        return unsubscribe;
+    }, []);
   return (
       <Stack>
+          <Stack.Screen name="screens/loginPage" options={{
+              headerTitle:'Login',
+              headerTitleAlign:'left',
+              headerTitleStyle: {
+                  fontSize:30,
+                  color:colors.textColorPrimary,
+              },
+              headerShown: false,
+              headerTransparent: true,
+          }} />
         <Stack.Screen name="(tabs)" options={{
           headerShown: false,
         }} />
@@ -70,16 +82,6 @@ function RootLayoutNav() {
               </TouchableOpacity>
           ),
         }} />
-          <Stack.Screen name="(modals)/loginPage" options={{
-              headerTitle:'Login',
-              headerTitleAlign:'left',
-              headerTitleStyle: {
-                  fontSize:30,
-                  color:colors.textColorPrimary,
-              },
-              presentation:'fullScreenModal',
-              headerTransparent: true,
-          }} />
       </Stack>
   );
 }
