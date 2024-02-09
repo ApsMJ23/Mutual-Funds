@@ -2,6 +2,7 @@ import {StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native"
 import {defaultStyles} from "@/constants/Styles";
 import colors from "@/constants/Colors";
 import {useEffect, useState} from "react";
+import GoogleSignup from "@/app/Components/GoogleSignup/GoogleSignup";
 
 type LoginFormProps = {
     userDetails: {
@@ -35,8 +36,8 @@ const LoginForm = (props: LoginFormProps) => {
             <TouchableOpacity onPress={TriggerLogin} disabled={disabled} style={disabled?styles.loginBtnDisable:styles.loginBtn}>
                 <Text>Login</Text>
             </TouchableOpacity>
+            <GoogleSignup/>
             <Text onPress={()=>setShowSignUp(true)} style={[styles.forgotPassword,{textAlign: 'left'}]}>Sign Up?</Text>
-
         </View>
     )
 }
