@@ -36,6 +36,7 @@ const loginPage = () => {
             });
     }
     const triggerSignUp = () => {
+        console.log(userDetails);
         createUserWithEmailAndPassword(auth, userDetails.email, userDetails.password)
             .then((userCredential) => {
                 // Signed in
